@@ -7,11 +7,8 @@
 use_ghactions_ogd(workflow)
 }
 \arguments{
-\item{workflow}{see \code{\link[ghactions:use_ghactions]{workflow}}}
+\item{workflow}{see \code{\link[ghactions:use_ghactions]{ghactions::use_ghactions()}}}
 }
 \description{
-See \code{\link[ghactions]{use_ghactions}} from the \pkg{ghactions} package
-}
-\examples{
-see \code{\link[ghactions:use_ghactions]{workflow}}
+See \code{\link[ghactions:use_ghactions]{use_ghactions()}} from the \link{ghactions} package
 }

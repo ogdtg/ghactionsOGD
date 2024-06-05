@@ -26,7 +26,7 @@ create_ghactions_workflow(
 
 \item{scripts}{A vector of the paths of R scripts that should be executed in the workflow}
 
-\item{repo}{Name of the repo. By default the function retreives the name of the current repo by using \code{\link{get_repo_name()}}}
+\item{repo}{Name of the repo. By default the function retreives the name of the current repo by using \code{\link[=get_repo_name]{get_repo_name()}}}
 
 \item{commit_message}{Commit Message for automatic commits}
 

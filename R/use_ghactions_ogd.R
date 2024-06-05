@@ -1,12 +1,11 @@
 #' Workflow automation with GitHub Actions (specialised)
 #'
-#' See \code{\link[ghactions]{use_ghactions}} from the \pkg{ghactions} package
+#' See [`use_ghactions()`][ghactions::use_ghactions()] from the [ghactions] package
 #'
-#' @param workflow see \code{\link[ghactions:use_ghactions]{workflow}}
+#' @param workflow see [ghactions::use_ghactions()]
 #'
 #' @export
 #'
-#' @examples see \code{\link[ghactions:use_ghactions]{workflow}}
 use_ghactions_ogd <- function(workflow){
 
   checkmate::assert_list(x = workflow, any.missing = FALSE,
