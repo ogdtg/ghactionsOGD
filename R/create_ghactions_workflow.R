@@ -12,7 +12,7 @@
 #' @param scripts A vector of the paths of R scripts that should be executed in the workflow
 #' @param repo Name of the repo. By default the function retreives the name of the current repo by using [get_repo_name()]
 #' @param commit_message Commit Message for automatic commits
-#' @param token Personal Access Token with the necessary permissions to set Actions Secrets. By default the function retreives the password from the git.config by using \code{\link{get_git_pwd()}}
+#' @param token Personal Access Token with the necessary permissions to set Actions Secrets. By default the function retreives the password from the git.config by using [get_git_pwd()]
 #'
 #' @return list with the full workflow
 #' @export

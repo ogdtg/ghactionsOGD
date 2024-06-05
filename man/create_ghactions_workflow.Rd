@@ -30,7 +30,7 @@ create_ghactions_workflow(
 
 \item{commit_message}{Commit Message for automatic commits}
 
-\item{token}{Personal Access Token with the necessary permissions to set Actions Secrets. By default the function retreives the password from the git.config by using \code{\link{get_git_pwd()}}}
+\item{token}{Personal Access Token with the necessary permissions to set Actions Secrets. By default the function retreives the password from the git.config by using \code{\link[=get_git_pwd]{get_git_pwd()}}}
 }
 \value{
 list with the full workflow

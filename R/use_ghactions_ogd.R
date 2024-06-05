@@ -1,6 +1,6 @@
 #' Workflow automation with GitHub Actions (specialised)
 #'
-#' See [`use_ghactions()`][ghactions::use_ghactions()] from the [ghactions] package
+#' See [`use_ghactions()`][ghactions::use_ghactions()]
 #'
 #' @param workflow see [ghactions::use_ghactions()]
 #'

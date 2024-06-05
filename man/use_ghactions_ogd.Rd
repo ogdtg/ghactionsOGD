@@ -10,5 +10,5 @@ use_ghactions_ogd(workflow)
 \item{workflow}{see \code{\link[ghactions:use_ghactions]{ghactions::use_ghactions()}}}
 }
 \description{
-See \code{\link[ghactions:use_ghactions]{use_ghactions()}} from the \link{ghactions} package
+See \code{\link[ghactions:use_ghactions]{use_ghactions()}}
 }
