@@ -37,108 +37,16 @@ run this command from within the cloned repo.
 
 ``` r
 library(ghactionsOGD)
-create_ghactions_workflow(cron = "31 2 * * *",
+workflow <- create_ghactions_workflow(cron = "31 2 * * *",
                           name = "Test Run",
                           env = list(ODS_KEY = Sys.getenv("ODS_KEY")),
                           scripts = "test.R")
 #> ✔ Setting active project to '/r-proj/stat/ogd/ghactionsOGD'
 #> ✔ Successfully added secret ODS_KEY to repo ogdtg/ghactionsOGD.
 #> Warning: Multiple github remotes found. Using origin.
-#> ✔ Adding '^\\.github/workflows$' to '.Rbuildignore'
 #> ✔ GitHub actions is set up and ready to go.
 #> • Commit and push the changes.
 #> • Visit the actions tab of your repository on github.com to check the results.
-#> $name
-#> [1] "Test Run"
-#> 
-#> $on
-#> $on$schedule
-#> $on$schedule$cron
-#> [1] "31 2 * * *"
-#> 
-#> 
-#> 
-#> $jobs
-#> $jobs$run_script
-#> $jobs$run_script$`runs-on`
-#> [1] "ubuntu-latest"
-#> 
-#> $jobs$run_script$steps
-#> $jobs$run_script$steps[[1]]
-#> $jobs$run_script$steps[[1]]$name
-#> [1] "Checkout Repository"
-#> 
-#> $jobs$run_script$steps[[1]]$uses
-#> [1] "actions/checkout@v4"
-#> 
-#> $jobs$run_script$steps[[1]]$run
-#> 
-#> 
-#> 
-#> $jobs$run_script$steps[[2]]
-#> $jobs$run_script$steps[[2]]$name
-#> [1] "Execute Script"
-#> 
-#> $jobs$run_script$steps[[2]]$run
-#> Rscript test.R
-#> 
-#> $jobs$run_script$steps[[2]]$env
-#> $jobs$run_script$steps[[2]]$env$ODS_KEY
-#> [1] "${{ secrets.ODS_KEY }}"
-#> 
-#> 
-#> 
-#> $jobs$run_script$steps[[3]]
-#> $jobs$run_script$steps[[3]]$name
-#> [1] "Set up Git"
-#> 
-#> $jobs$run_script$steps[[3]]$run
-#> git config --global --add safe.directory /__w/ghactionsOGD/ghactionsOGD
-#> git config --global user.name "GitHub Actions"
-#> git config --global user.email "username@users.noreply.github.com"
-#> 
-#> 
-#> $jobs$run_script$steps[[4]]
-#> $jobs$run_script$steps[[4]]$name
-#> [1] "Check if there are changes to commit"
-#> 
-#> $jobs$run_script$steps[[4]]$id
-#> [1] "changes_check"
-#> 
-#> $jobs$run_script$steps[[4]]$run
-#> git add .
-#> if git diff-index --quiet HEAD; then
-#>    echo "changes=false" >>$GITHUB_OUTPUT
-#> else
-#>    echo "changes=true" >> $GITHUB_OUTPUT
-#> fi
-#> 
-#> 
-#> $jobs$run_script$steps[[5]]
-#> $jobs$run_script$steps[[5]]$name
-#> [1] "Commit changes"
-#> 
-#> $jobs$run_script$steps[[5]]$`if`
-#> [1] "${{ steps.changes_check.outputs.changes == 'true' }}"
-#> 
-#> $jobs$run_script$steps[[5]]$run
-#> git commit -m "Automated changes by GitHub Actions"
-#> 
-#> 
-#> $jobs$run_script$steps[[6]]
-#> $jobs$run_script$steps[[6]]$name
-#> [1] "Push changes"
-#> 
-#> $jobs$run_script$steps[[6]]$`if`
-#> [1] "${{ steps.changes_check.outputs.changes == 'true' }}"
-#> 
-#> $jobs$run_script$steps[[6]]$run
-#> git push
-#> 
-#> 
-#> 
-#> $jobs$run_script$container
-#> [1] "rocker/tidyverse:4.1.2"
 ```
 
 First, this command will produce the file `.github/workflows/main.yml`
@@ -184,12 +92,95 @@ jobs:
     container: rocker/tidyverse:4.1.2
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+Furthermore this command will set the neceessary Actions Secrets. These
+can be used as environmental Variables in the R script. In this case you
+can use `Sys.getenv("ODS_KEY")` inside the `test.R` file an you will
+receive the value defined in the `create_ghactions_workflow` function.
 
-You can also embed plots, for example:
+### YAML File
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+This YAML file represents a simple workflow which can be used to do
+small-scale data-retrieval tasks. For a better understanding the content
+will be discussde in more detail.
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+#### Event trigger
+
+``` yaml
+'on':
+  schedule:
+    - cron: 31 2 * * *
+  workflow_dispatch: ~
+```
+
+This part defines, when the workflow should be triggered. Per default
+the `create_ghactions_workflow` adds a cron schedule that you can define
+in the function and a `workflow_dispatch` trigger. With this schedule,
+the workflow will be triggered every day at 2:31. The
+`workflow_dispatch` trigger allows you to trigger the workflow manually,
+which is useful for testing purposes.
+
+#### Initialise Conatiner
+
+``` yaml
+runs-on: ubuntu-latest
+container: rocker/tidyverse:4.1.2
+```
+
+In this section the system is defined and the docker image that should
+be used. You can see a list of all rocker images
+[here](https://rocker-project.org/images/). You can also use your own
+image which has to be deployed on docker and must be publicly available.
+
+#### Execute Script
+
+``` yaml
+- name: Execute Script
+        run: Rscript test.R
+        env:
+          ODS_KEY: ${{ secrets.ODS_KEY }}
+```
+
+In this step the script is executed. Make sure that all needed packages
+are installed in the Image or in the script itself. I would recommend to
+use an image where all packages are preinstalled. This ensures stability
+and reproducability.
+
+All variables that are defined in `env` must be stored as Actions
+Secrets. The `create_ghactions_workflow` takes care for this and
+initializes the Action secrets accordingly. You can find the Action
+Secrets on GitHub under `Settings -> Secrets and Variables -> Actions`
+
+#### Push the Results to the Repo
+
+``` yaml
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Set up Git
+        run: |-
+          git config --global --add safe.directory /__w/github_test/github_test
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "username@users.noreply.github.com"
+      - name: Check if there are changes to commit
+        id: changes_check
+        run: |-
+          git add .
+          if git diff-index --quiet HEAD; then
+             echo "changes=false" >>$GITHUB_OUTPUT
+          else
+             echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Commit changes
+        if: ${{ steps.changes_check.outputs.changes == 'true' }}
+        run: git commit -m "Automated changes by GitHub Actions"
+      - name: Push changes
+        if: ${{ steps.changes_check.outputs.changes == 'true' }}
+        run: git push
+```
+
+To actually use the results your script you have to push them to the
+Repo you are running the Workflow in. Therefore you need to checkout
+your repository, set up git, add , commit and push the content.
+
+There is also a functionality to check whether something has changed
+e.g. if a push is neccessary.
