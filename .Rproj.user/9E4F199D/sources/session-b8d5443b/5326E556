@@ -1,0 +1,25 @@
+{
+    "id": "5326E556",
+    "path": null,
+    "project_path": null,
+    "type": "r_code_browser",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1717574423239.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "context": "package:ghactions:::use_ghactions",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 7739845473652203892,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1717574423239,
+    "read_only": false,
+    "read_only_alternatives": []
+}

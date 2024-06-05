@@ -1,0 +1,27 @@
+{
+    "id": "EB40A6E7",
+    "path": "/r-proj/stat/ogd/ghactionsOGD/R/git_config.R",
+    "project_path": "R/git_config.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1717573449909.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "5,11",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1717573675,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1717573675434,
+    "read_only": false,
+    "read_only_alternatives": []
+}
