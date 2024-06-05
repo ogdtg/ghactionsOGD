@@ -2,4 +2,4 @@
 library("gitignore")
 
 new_lines <- gi_fetch_templates("r")
-gi_write_gitignore(fetched_template = new_lines, gitignore_file = f)
+gi_write_gitignore(fetched_template = new_lines, gitignore_file = ".gitignore")
