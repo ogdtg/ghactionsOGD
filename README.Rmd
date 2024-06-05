@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 The goal of ghactionsOGD is to simplify the usage of Github Actions for small-scale data retrieval processes. A typical workflow would be to scrape data from a website on a daily basis and publish it as Open Government Data (OGD). In such a scenario the packages helps the user to set up the correct GitHub Actions Workflow including setting Actions Secrets and specifying the YAML Workflow file.
 
-Since the package is only used for setting up the workflow, it does not need to be part of your depencencies on GitHub later on.
+Since the package is only used for setting up the workflow, it does not need to be part of your dependencies on GitHub later on.
 
 ## Installation
 
@@ -36,14 +36,12 @@ devtools::install_github("ogdtg/ghactionsOGD")
 
 To create a workflow and set Actions Secrets that can be used in the R script you can use the following command. Before running the command you should have cloned the GitHub Repo to your local machine and you should run this command from within the cloned repo.
 
-```{r example}
+``` r
 library(ghactionsOGD)
 workflow <- create_ghactions_workflow(cron = "31 2 * * *",
                           name = "Test Run",
                           env = list(ODS_KEY = Sys.getenv("ODS_KEY")),
                           scripts = "test.R")
-
-
 ```
 
 
@@ -89,7 +87,7 @@ jobs:
     container: rocker/tidyverse:4.1.2
 ```
 
-Furthermore this command will set the neceessary Actions Secrets. These can be used as environmental Variables in the R script. In this case you can use `Sys.getenv("ODS_KEY")` inside the `test.R` file an you will receive the value defined in the `create_ghactions_workflow` function.
+Furthermore this command will set the necessary Actions Secrets. These can be used as environmental Variables in the R script. In this case you can use `Sys.getenv("ODS_KEY")` inside the `test.R` file an you will receive the value defined in the `create_ghactions_workflow` function.
 
 
 
@@ -107,7 +105,7 @@ This YAML file represents a simple workflow which can be used to do small-scale 
 
 This part defines, when the workflow should be triggered. Per default the `create_ghactions_workflow` adds a cron schedule that you can define in the function and a `workflow_dispatch` trigger. With this schedule, the workflow will be triggered every day at 2:31. The  `workflow_dispatch` trigger allows you to trigger the workflow manually, which is useful for testing purposes.
 
-#### Initialise Conatiner
+#### Initialise Container
 
 ```yaml
 runs-on: ubuntu-latest
