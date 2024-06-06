@@ -4,7 +4,7 @@ Title: Easy GitHub Actions workflows for small-scale data-retrieving processes
 Version: 0.1.1
 Authors@R: 
     person("Felix", "Lorenz", , "ogd@tg.ch", role = c("aut", "cre"))
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: Felix Lorenz <ogd@tg.ch>
 Description: Helps to create GitHub Actions workflows for small-scale data-retrieving processes such as scraping a website. Sets up the YAML file, creates the necessary directory structure and sets Actions Secrets on GitHub if needed.
 License: GPL (>= 3)
 Encoding: UTF-8

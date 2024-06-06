@@ -17,7 +17,8 @@ use_ghactions_ogd <- function(workflow){
 
 
   # Manual correction
-  yaml_file <- ghactions:::r2yaml(workflow)
+  r2yaml <- utils::getFromNamespace("r2yaml", "ghactions") # https://stackoverflow.com/a/63023801
+  yaml_file <- r2yaml(workflow)
   yaml_file_new <- gsub("    cron:","    - cron:",yaml_file)
 
   tryCatch(expr = gh::gh_tree_remote(), error = function(cnd) {

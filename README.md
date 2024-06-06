@@ -16,7 +16,7 @@ set up the correct GitHub Actions Workflow including setting Actions
 Secrets and specifying the YAML Workflow file.
 
 Since the package is only used for setting up the workflow, it does not
-need to be part of your depencencies on GitHub later on.
+need to be part of your dependencies on GitHub later on.
 
 ## Installation
 
@@ -41,12 +41,6 @@ workflow <- create_ghactions_workflow(cron = "31 2 * * *",
                           name = "Test Run",
                           env = list(ODS_KEY = Sys.getenv("ODS_KEY")),
                           scripts = "test.R")
-#> ✔ Setting active project to '/r-proj/stat/ogd/ghactionsOGD'
-#> ✔ Successfully added secret ODS_KEY to repo ogdtg/ghactionsOGD.
-#> Warning: Multiple github remotes found. Using origin.
-#> ✔ GitHub actions is set up and ready to go.
-#> • Commit and push the changes.
-#> • Visit the actions tab of your repository on github.com to check the results.
 ```
 
 First, this command will produce the file `.github/workflows/main.yml`
@@ -92,7 +86,7 @@ jobs:
     container: rocker/tidyverse:4.1.2
 ```
 
-Furthermore this command will set the neceessary Actions Secrets. These
+Furthermore this command will set the necessary Actions Secrets. These
 can be used as environmental Variables in the R script. In this case you
 can use `Sys.getenv("ODS_KEY")` inside the `test.R` file an you will
 receive the value defined in the `create_ghactions_workflow` function.
@@ -119,7 +113,7 @@ the workflow will be triggered every day at 2:31. The
 `workflow_dispatch` trigger allows you to trigger the workflow manually,
 which is useful for testing purposes.
 
-#### Initialise Conatiner
+#### Initialise Container
 
 ``` yaml
 runs-on: ubuntu-latest
