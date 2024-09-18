@@ -34,9 +34,11 @@ get_git_remote <- function(){
 get_repo_name <- function(){
 
   tryCatch({
-    system("git rev-parse --show-toplevel", intern = TRUE) %>% basename()
+    system("git remote get-url origin | sed 's|.*/||' | sed 's/.git$//'")
   }, error = function(cond){
     warning("Repo name cannot be retrieved automatically.")
     NULL
   })
 }
+
+
