@@ -43,6 +43,9 @@ This function sets up a GitHub Action workflow using a cron job by doing the fol
 \item Sets Actions Secrets if needed.
 }
 }
+\details{
+IMPORTANT: The directory where the workflow should be created has to be a git repository!
+}
 \examples{
 \dontrun{
 create_ghactions_workflow(cron = "31 2 * * *",

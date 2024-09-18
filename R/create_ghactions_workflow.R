@@ -5,6 +5,8 @@
 #' - Creates the YAML file to configure the workflow.
 #' - Sets Actions Secrets if needed.
 #'
+#' IMPORTANT: The directory where the workflow should be created has to be a git repository!
+#'
 #' @param cron A string specifying the schedule in cron notation (e.g., "0 0 * * *" for daily at midnight).
 #' @param name Name of the workflow
 #' @param container_name Name of the container. This can be any docker container publicly available. Default is rocker/tidyverse:4.1.2
@@ -45,6 +47,8 @@ create_ghactions_workflow <- function(cron = NULL, name,container_name = "rocker
     responses <- lapply(seq_along(env), function(i){
       tic::gha_add_secret(secret = env[[i]],name = names(env[i]))
     })
+  } else {
+    env_list <- NULL
   }
 
 
