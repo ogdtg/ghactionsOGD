@@ -181,7 +181,7 @@ e.g. if a push is neccessary.
 
 ## Acknowledgment
 
-The package is using internally R functions imported directly from other
+The package is using R functions internally imported directly from other
 R packages. The following R functions have been integrated as utilities
 functions:
 
