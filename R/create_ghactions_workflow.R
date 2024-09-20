@@ -45,15 +45,25 @@ create_ghactions_workflow <- function(cron = NULL, name,container_name = "rocker
 
     # Set the relevant repository secrets
     responses <- lapply(seq_along(env), function(i){
-      tic::gha_add_secret(secret = env[[i]],name = names(env[i]))
+      gha_add_secret(secret = env[[i]],name = names(env[i]))
     })
   } else {
     env_list <- NULL
   }
 
+  on <- function(event, ...) {
+    checkmate::assert_choice(
+      x = event,
+      choices = c("push", "pull_request", "schedule")
+    )
+    rlang::set_names(x = list(purrr::compact(list(...))), nm = event)
+  }
 
+  on_schedule <- function(cron = NULL) {
+    on(event = "schedule", cron = cron)
+  }
 
-  on_trigger = ghactions::on_schedule(cron = cron)
+  on_trigger = on_schedule(cron = cron)
   on_trigger$workflow_dispatch = NULL
 
 
@@ -62,36 +72,36 @@ create_ghactions_workflow <- function(cron = NULL, name,container_name = "rocker
                  'git config --global user.email "username@users.noreply.github.com"')
 
 
-  full_workflow <- ghactions::workflow(
+  full_workflow <- workflow(
     name = name,
     on = on_trigger,
-    jobs = ghactions::job(
+    jobs = job(
       id = "run_script",
       container = container_name,
       `runs-on` = "ubuntu-latest",
       steps = list(
-        ghactions::step(name = "Checkout Repository",
-                        uses = "actions/checkout@v4"),
-        ghactions::step(name = "Execute Script",
-                        env = env_list,
-                        run = paste0("Rscript ",scripts)),
-        ghactions::step(name="Set up Git",
-                        run = git_setup),
-        ghactions::step(name = "Check if there are changes to commit",
-                        id = "changes_check",
-                        run = c("git add .",
-                                "if git diff-index --quiet HEAD; then",
-                                '   echo "changes=false" >>$GITHUB_OUTPUT',
-                                "else",
-                                '   echo "changes=true" >> $GITHUB_OUTPUT',
-                                "fi")),
-        ghactions::step(name= "Commit changes",
-                        `if` = "${{ steps.changes_check.outputs.changes == 'true' }}",
-                        run = c(paste0('git commit -m "',commit_message,'"'))
+        step(name = "Checkout Repository",
+             uses = "actions/checkout@v4"),
+        step(name = "Execute Script",
+             env = env_list,
+             run = paste0("Rscript ",scripts)),
+        step(name="Set up Git",
+             run = git_setup),
+        step(name = "Check if there are changes to commit",
+            id = "changes_check",
+            run = c("git add .",
+                    "if git diff-index --quiet HEAD; then",
+                    '   echo "changes=false" >>$GITHUB_OUTPUT',
+                    "else",
+                    '   echo "changes=true" >> $GITHUB_OUTPUT',
+                    "fi")),
+        step(name= "Commit changes",
+             `if` = "${{ steps.changes_check.outputs.changes == 'true' }}",
+             run = c(paste0('git commit -m "',commit_message,'"'))
         ),
-        ghactions::step(name = "Push changes",
-                        `if` = "${{ steps.changes_check.outputs.changes == 'true' }}",
-                        run = "git push"
+        step(name = "Push changes",
+             `if` = "${{ steps.changes_check.outputs.changes == 'true' }}",
+             run = "git push"
         )
 
       )

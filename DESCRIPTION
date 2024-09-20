@@ -1,9 +1,11 @@
 Package: ghactionsOGD
 Type: Package
 Title: Easy GitHub Actions workflows for small-scale data-retrieving processes
-Version: 0.1.1
-Authors@R: 
-    person("Felix", "Lorenz", , "ogd@tg.ch", role = c("aut", "cre"))
+Version: 0.1.2
+Authors@R: c(
+     person("Felix", "Lorenz", , "ogd@tg.ch", role = c("aut", "cre")),
+     person("Felix", "Luginbuhl", , "felix.luginbuehl@sg.ch", role = c("ctb"), comment = c(ORCID = "0009-0008-6625-2899"))
+    )
 Maintainer: Felix Lorenz <ogd@tg.ch>
 Description: Helps to create GitHub Actions workflows for small-scale data-retrieving processes such as scraping a website. Sets up the YAML file, creates the necessary directory structure and sets Actions Secrets on GitHub if needed.
 License: GPL (>= 3)
@@ -14,10 +16,12 @@ RoxygenNote: 7.2.3
 Imports:
     checkmate,
     gh,
-    ghactions,
+    purrr,
+    glue,
+    rlang (>= 1.0.0),
     magrittr,
-    tic,
+    cli,
+    base64enc,
+    sodium,
+    git2r,
     usethis
-Remotes:
-    ropensci/tic,
-    r-lib/ghactions
