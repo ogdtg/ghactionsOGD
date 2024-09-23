@@ -178,3 +178,16 @@ your repository, set up git, add , commit and push the content.
 
 There is also a functionality to check whether something has changed
 e.g. if a push is neccessary.
+
+## Acknowledgment
+
+The package is using R functions internally imported directly from other
+R packages. The following R functions have been integrated as utilities
+functions:
+
+- **[tic](https://github.com/ropensci/tic)**: `gha_add_secret()`
+- **[ghactions](https://github.com/maxheld83/ghactions)**: `job()`,
+  `step()`, `workflow()`
+
+All credits for these imported functions goes to the authors of the
+**tic** and **ghactions** R packages.
